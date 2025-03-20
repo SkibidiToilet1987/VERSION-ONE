@@ -15,7 +15,7 @@ router.post("/", async function (req, res) {
     var sname = req.body.sname;
     var fname = req.body.fname;
     var client = new MongoClient(url);
-    var database = client.db("startup");
+    var database = client.db("ISL");
     var collection = database.collection("users");
 
     if (await UserFunctions.CheckEmailExists(email)) {

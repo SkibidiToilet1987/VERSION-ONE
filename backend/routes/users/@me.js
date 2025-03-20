@@ -8,7 +8,7 @@ async function getMe(req, res) {
     if (authenticateToken(token)) {
       var email = getEmailFromAuth(token);
       var client = new MongoClient(url);
-      var database = client.db("startup");
+      var database = client.db("ISL");
       var collection = database.collection("users");
       var me = await collection.findOne({ email });
       delete me.password;

@@ -36,7 +36,7 @@ async function getIDFromAuth(authHeader) {
   if (jwt.verify(token, process.env.TOKEN_SECRET)) {
     var email = jwt.decode(token).email;
     var client = new MongoClient(url);
-    var database = client.db("startup");
+    var database = client.db("ISL");
     var collection = database.collection("users");
     var user = await collection.findOne({ email });
     return user._id;

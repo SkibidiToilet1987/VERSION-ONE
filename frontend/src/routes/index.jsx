@@ -1,5 +1,6 @@
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import MainNavigation from '../components/MainNavigation';
+import Footer from '../components/MainFooter';
 
 export default function Index() {
     return (
@@ -46,11 +47,7 @@ export default function Index() {
                         </Col>
                     </Row>
                 </Container>
-                <footer className="bg-body-tertiary text-dark text-center py-3 mt-auto">
-                    <Container>
-                        <p className="mb-0">&copy; <strong>2024 Your Company Name. All rights reserved.</strong></p>
-                    </Container>
-                </footer>
+                <Footer />
             </div>
         </>
     )
