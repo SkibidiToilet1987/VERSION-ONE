@@ -67,7 +67,35 @@ export default function Login() {
         } catch (error) {
             // Handle API errors
             if (error.response) {
-                setValidationErrors({ api: error.response.data.message || "Invalid email or password. Please try again." });
+                if (error.response.status === 404) {
+                    // User does not exist
+                    setValidationErrors({
+                        api: (
+                            <>
+                                User does not exist. Please{" "}
+                                <a href="/register" style={{ color: 'inherit', textDecoration: 'underline' }}>
+                                    register here
+                                </a>
+                                .
+                            </>
+                        ),
+                    });
+                } else if (error.response.status === 401) {
+                    // Invalid credentials
+                    setValidationErrors({
+                        api: (
+                            <>
+                                Invalid email or password. Please try again or{" "}
+                                <a href="/register" style={{ color: 'inherit', textDecoration: 'underline' }}>
+                                    register here
+                                </a>
+                                .
+                            </>
+                        ),
+                    });
+                } else {
+                    setValidationErrors({ api: error.response.data.message || "An error occurred. Please try again." });
+                }
             } else {
                 setValidationErrors({ api: "An error occurred. Please check your internet connection and try again." });
             }
@@ -157,7 +185,7 @@ export default function Login() {
                     </Col>
                 </Row>
             </Container>
-        <Footer/>
+            <Footer />
         </>
     );
 }

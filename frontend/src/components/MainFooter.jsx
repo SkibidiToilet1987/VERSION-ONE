@@ -1,6 +1,6 @@
 import { Container, Row, Col, Nav, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import './Footer.css'; // You can add additional custom styling here for better design
+import './Footer.css';
 
 export default function Footer() {
     return (
@@ -31,12 +31,12 @@ export default function Footer() {
                             </Nav.Item>
                         </Nav>
                     </Col>
-                                        {/* About Green Energy */}
-                                        <Col md={4}>
+                    {/* About Green Energy */}
+                    <Col md={4}>
                         <h5>Why We Love Green Energy</h5>
                         <p>
                             Green energy is vital for a sustainable future. It reduces greenhouse gas emissions,
-                            conserves natural resources, and helps combat climate change. By embracing renewable 
+                            conserves natural resources, and helps combat climate change. By embracing renewable
                             energy sources like solar and wind, we can create a cleaner, healthier planet for future generations.
                         </p>
                     </Col>

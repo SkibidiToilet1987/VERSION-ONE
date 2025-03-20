@@ -30,34 +30,34 @@ export default function Register() {
     // Validate password requirements
     const validatePassword = (password) => {
         const passwordErrors = [];
-        
+
         if (password.length < 8) {
             passwordErrors.push("Password must be at least 8 characters long");
         }
-        
+
         if (!/\d/.test(password)) {
             passwordErrors.push("Password must contain at least one number");
         }
-        
+
         if (!/[a-z]/.test(password)) {
             passwordErrors.push("Password must contain at least one lowercase letter");
         }
-        
+
         if (!/[A-Z]/.test(password)) {
             passwordErrors.push("Password must contain at least one uppercase letter");
         }
-        
+
         if (!/[^A-Za-z0-9]/.test(password)) {
             passwordErrors.push("Password must contain at least one special character");
         }
-        
+
         return passwordErrors;
     };
 
     const checkPasswordStrength = (password) => {
         // Start with a base score
         let strength = 0;
-        
+
         // Skip strength check if password is empty or too short
         if (!password || password.length < 1) {
             setPasswordStrength(0);
@@ -68,22 +68,22 @@ export default function Register() {
 
         // Check length
         if (password.length >= 8) strength += 20;
-        
+
         // Check for numbers
         if (/\d/.test(password)) strength += 20;
-        
+
         // Check for lowercase letters
         if (/[a-z]/.test(password)) strength += 20;
-        
+
         // Check for uppercase letters
         if (/[A-Z]/.test(password)) strength += 20;
-        
+
         // Check for special characters
         if (/[^A-Za-z0-9]/.test(password)) strength += 20;
-        
+
         // Set the strength and appropriate label/color
         setPasswordStrength(strength);
-        
+
         if (strength < 40) {
             setStrengthLabel("Weak");
             setStrengthColor("danger");
@@ -102,43 +102,43 @@ export default function Register() {
     const handleRegisterSubmit = (event) => {
         event.preventDefault();
         const newErrors = {};
-        
+
         const firstName = event.target[0].value;
         const lastName = event.target[1].value;
-        
+
         // Validate empty fields
         if (!firstName.trim()) newErrors.firstName = "First name is required";
         if (!lastName.trim()) newErrors.lastName = "Last name is required";
-        
+
         // Validate email
         if (!email.trim()) {
             newErrors.email = "Email is required";
         } else if (!validateEmail(email)) {
             newErrors.email = "Please enter a valid email address";
         }
-        
+
         // Validate password
         const passwordErrors = validatePassword(password);
         if (passwordErrors.length > 0) {
             newErrors.password = passwordErrors;
         }
-        
+
         // Check if passwords match
         if (password !== confirmPassword) {
             newErrors.confirmPassword = "Passwords do not match";
         }
-        
+
         // If there are validation errors, show them and stop submission
         if (Object.keys(newErrors).length > 0) {
             setValidationErrors(newErrors);
             return;
         }
-        
+
         // If validation passes, submit the form
         axios.post('http://localhost:3000/users', {
-            email, 
-            password, 
-            fname: firstName, 
+            email,
+            password,
+            fname: firstName,
             sname: lastName
         }).then(() => {
             navigate('/login');
@@ -159,41 +159,41 @@ export default function Register() {
                                 <Form onSubmit={handleRegisterSubmit}>
                                     <Form.Group className='mb-3' controlId='formFirstName'>
                                         <Form.Label>First Name</Form.Label>
-                                        <Form.Control 
-                                            type="text" 
-                                            placeholder="Enter First Name" 
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Enter First Name"
                                             isInvalid={!!validationErrors.firstName}
                                         />
                                         {validationErrors.firstName && <Form.Text className="text-danger">{validationErrors.firstName}</Form.Text>}
                                     </Form.Group>
-                                    
+
                                     <Form.Group className="mb-3" controlId="formLastName">
                                         <Form.Label>Last Name</Form.Label>
-                                        <Form.Control 
-                                            type="text" 
-                                            placeholder="Enter Last Name" 
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Enter Last Name"
                                             isInvalid={!!validationErrors.lastName}
                                         />
                                         {validationErrors.lastName && <Form.Text className="text-danger">{validationErrors.lastName}</Form.Text>}
                                     </Form.Group>
-                                    
+
                                     <Form.Group className="mb-3" controlId="formEmail">
                                         <Form.Label>Email address</Form.Label>
-                                        <Form.Control 
-                                            type="email" 
-                                            placeholder="Enter email" 
+                                        <Form.Control
+                                            type="email"
+                                            placeholder="Enter email"
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                             isInvalid={!!validationErrors.email}
                                         />
                                         {validationErrors.email && <Form.Text className="text-danger">{validationErrors.email}</Form.Text>}
                                     </Form.Group>
-                                    
+
                                     <Form.Group className="mb-3" controlId="formPassword">
                                         <Form.Label>Password</Form.Label>
-                                        <Form.Control 
-                                            type="password" 
-                                            placeholder="Password" 
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="Password"
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                             isInvalid={!!validationErrors.password}
@@ -213,33 +213,33 @@ export default function Register() {
                                                     <small>Password Strength:</small>
                                                     <small>{strengthLabel}</small>
                                                 </div>
-                                                <ProgressBar 
-                                                    now={passwordStrength} 
-                                                    variant={strengthColor} 
+                                                <ProgressBar
+                                                    now={passwordStrength}
+                                                    variant={strengthColor}
                                                     style={{ height: '8px' }}
                                                 />
                                                 <div className="mt-1">
                                                     <small className="text-muted">
-                                                        Password must be at least 8 characters long and contain uppercase, lowercase, 
+                                                        Password must be at least 8 characters long and contain uppercase, lowercase,
                                                         numbers, and special characters.
                                                     </small>
                                                 </div>
                                             </div>
                                         )}
                                     </Form.Group>
-                                    
+
                                     <Form.Group className="mb-3" controlId="formConfirmPassword">
                                         <Form.Label>Confirm Password</Form.Label>
-                                        <Form.Control 
-                                            type="password" 
-                                            placeholder="Confirm your password" 
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="Confirm your password"
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
                                             isInvalid={!!validationErrors.confirmPassword}
                                         />
                                         {validationErrors.confirmPassword && <Form.Text className="text-danger">{validationErrors.confirmPassword}</Form.Text>}
                                     </Form.Group>
-                                    
+
                                     <Button style={{ width: "100%" }} variant="primary" type="submit">
                                         Submit
                                     </Button>
@@ -253,7 +253,7 @@ export default function Register() {
                     </Col>
                 </Row>
             </Container>
-        <Footer/>
+            <Footer />
         </>
     );
 }

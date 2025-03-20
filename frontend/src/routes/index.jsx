@@ -47,7 +47,7 @@ export default function Index() {
                         </Col>
                     </Row>
                 </Container>
-                <Footer />
+                <Footer/>
             </div>
         </>
     )
